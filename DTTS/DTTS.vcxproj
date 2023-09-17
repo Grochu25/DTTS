@@ -18,6 +18,29 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Bird.h" />
+    <ClInclude Include="Candy.h" />
+    <ClInclude Include="Counter.h" />
+    <ClInclude Include="GamePlay.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Shop.h" />
+    <ClInclude Include="SkinTile.h" />
+    <ClInclude Include="Spikes.h" />
+    <ClInclude Include="Title.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Bird.cpp" />
+    <ClCompile Include="Candy.cpp" />
+    <ClCompile Include="Counter.cpp" />
+    <ClCompile Include="GamePlay.cpp" />
+    <ClCompile Include="Kolce.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Shop.cpp" />
+    <ClCompile Include="SkinTile.cpp" />
+    <ClCompile Include="Spikes.cpp" />
+    <ClCompile Include="Title.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -110,7 +133,7 @@
       <AdditionalIncludeDirectories>C:\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-system-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
@@ -132,25 +155,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Kolce\Kolce\Bird.cpp" />
-    <ClCompile Include="..\..\Kolce\Kolce\Candy.cpp" />
-    <ClCompile Include="..\..\Kolce\Kolce\Counter.cpp" />
-    <ClCompile Include="..\..\Kolce\Kolce\GamePlay.cpp" />
-    <ClCompile Include="..\..\Kolce\Kolce\Kolce.cpp" />
-    <ClCompile Include="..\..\Kolce\Kolce\Menu.cpp" />
-    <ClCompile Include="..\..\Kolce\Kolce\Spikes.cpp" />
-    <ClCompile Include="..\..\Kolce\Kolce\Title.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Kolce\Kolce\Bird.h" />
-    <ClInclude Include="..\..\Kolce\Kolce\Candy.h" />
-    <ClInclude Include="..\..\Kolce\Kolce\Counter.h" />
-    <ClInclude Include="..\..\Kolce\Kolce\GamePlay.h" />
-    <ClInclude Include="..\..\Kolce\Kolce\Menu.h" />
-    <ClInclude Include="..\..\Kolce\Kolce\Spikes.h" />
-    <ClInclude Include="..\..\Kolce\Kolce\Title.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

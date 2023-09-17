@@ -12,6 +12,9 @@ void writeDataFile(GamePlay* gp)
 
         dataFile.write(reinterpret_cast<char*>(&hisc), sizeof(int));
         dataFile.write(reinterpret_cast<char*>(&gp->candyAmount), sizeof(int));
+
+        for (int i = 0; i < 20; i++)
+            dataFile.write(reinterpret_cast<char*>(&gp->boughtSkins[i]), sizeof(bool));
         dataFile.close();
     }
     catch (std::exception e)
@@ -30,11 +33,17 @@ GamePlay::GamePlay(sf::RenderWindow &window, float cell_size)
 
 void GamePlay::readDataFile()
 {
+
     try
     {
+        boughtSkins = new bool[20];
+
         std::ifstream dataFile("data", std::ios::binary);
         dataFile.read(reinterpret_cast<char*>(&highScore), sizeof(int));
         dataFile.read(reinterpret_cast<char*>(&candyAmount), sizeof(int));
+        for (int i = 0; i < 20; i++)
+            dataFile.read(reinterpret_cast<char*>(&boughtSkins[i]), sizeof(bool));
+
         dataFile.close();
     }
     catch (std::exception e)

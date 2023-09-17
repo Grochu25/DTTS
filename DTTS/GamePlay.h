@@ -24,6 +24,7 @@ protected:
 	Candy candy;
 	sf::RenderWindow* window = nullptr;
 	sf::RectangleShape background;
+	bool *boughtSkins;
 
 public:
 	GamePlay() {}

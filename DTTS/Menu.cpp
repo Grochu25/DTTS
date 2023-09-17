@@ -1,16 +1,27 @@
 #include "Menu.h"
+#include "SkinTile.h"
 
+void Menu::initialScale(float windowX)
+{
+    shopTexture = new sf::Texture();
+    shopTexture->loadFromFile("img/shop.png");
+    shopButton.setRadius(cell_size * 0.6);
+    shopButton.setTexture(shopTexture);
+    shopButton.setPosition(cell_size * 1, cell_size * 5);
+
+    title = new Title(cell_size * 0.75);
+    title->setDisk(windowX, cell_size * 7, cell_size * 2);
+    title->setPosition(windowX - (title->getGlobalBounds().width / 2), cell_size * 2);
+
+    GamePlay::initialScale();
+    this->candy.setPosition(windowX - candy.getGlobalBounds().width, cell_size * 4.25);
+}
 
 Menu::Menu(sf::RenderWindow& window, float cell_size) {
     this->window = &window;
     this->cell_size = cell_size;
-    initialScale();
+    initialScale(window.getSize().x / 2);
     readDataFile();
-
-    this->candy.setPosition(window.getSize().x / 2 - candy.getGlobalBounds().width, cell_size * 4.25);
-    title = new Title(cell_size*0.75);
-    title->setDisk(window.getSize().x / 2, cell_size * 7, cell_size * 2);
-    title->setPosition(window.getSize().x / 2 - (title->getGlobalBounds().width / 2), cell_size * 2);
     drawCounters();
 }
 
@@ -47,6 +58,7 @@ void Menu::drawComponents()
     window->draw(candy);
     window->draw(candyAmountDisplay);
     window->draw(highScoreDisplay);
+    window->draw(shopButton);
     window->display();
 }
 
@@ -63,11 +75,18 @@ void Menu::start() {
         sf::Event eventHandler;
         while (window->pollEvent(eventHandler))
         {
-            if ((eventHandler.type == sf::Event::KeyPressed && eventHandler.key.code == sf::Keyboard::Space) || 
+            if (eventHandler.type == sf::Event::MouseButtonReleased && shopButton.getGlobalBounds().contains(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y))
+            {
+                shop = new Shop(window, cell_size);
+                shop->open();
+                delete shop;
+            }
+
+            else if ((eventHandler.type == sf::Event::KeyPressed && eventHandler.key.code == sf::Keyboard::Space) ||
                 eventHandler.type == sf::Event::MouseButtonReleased)
                 start = true;
 
-            if ((eventHandler.type == sf::Event::KeyPressed && eventHandler.key.code == sf::Keyboard::Escape) ||
+            else if ((eventHandler.type == sf::Event::KeyPressed && eventHandler.key.code == sf::Keyboard::Escape) ||
                 eventHandler.type == sf::Event::Closed)
                 window->close();
         }

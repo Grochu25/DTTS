@@ -1,11 +1,12 @@
 ﻿#include <SFML/Graphics.hpp>
 #include "GamePlay.h"
 #include "Bird.h"
-#include"Menu.h"
+#include "Menu.h"
 
 float cell = 72;
 
-int WinMain()
+//int WinMain()
+int main()
 {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 2000;   //wygladzenie krawedzi 
