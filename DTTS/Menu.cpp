@@ -17,11 +17,18 @@ void Menu::initialScale(float windowX)
     this->candy.setPosition(windowX - candy.getGlobalBounds().width, cell_size * 4.25);
 }
 
+void Menu::prepareSounds()
+{
+    buffer.loadFromFile("audio/button.wav");
+    buttonSound.setBuffer(buffer);
+}
+
 Menu::Menu(sf::RenderWindow& window, float cell_size) {
     this->window = &window;
     this->cell_size = cell_size;
-    initialScale(window.getSize().x / 2);
     readDataFile();
+    initialScale(window.getSize().x / 2);
+    prepareSounds();
     drawCounters();
 }
 
@@ -77,8 +84,10 @@ void Menu::start() {
         {
             if (eventHandler.type == sf::Event::MouseButtonReleased && shopButton.getGlobalBounds().contains(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y))
             {
+                buttonSound.play();
                 shop = new Shop(window, cell_size);
                 shop->open();
+                bird.setNewTextures(shop->getSkinPath());
                 delete shop;
             }
 

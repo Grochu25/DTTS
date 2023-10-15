@@ -12,9 +12,9 @@ Shop::Shop(sf::RenderWindow* window, float cell_size)
 	for (int i = 0; i < 20; i++)
 	{
 		if (skinNames[i] != "")
-			tiles[i] = new SkinTile(cell_size, boughtSkins[i], 100, "img/skins/" + skinNames[i]);
+			tiles[i] = new SkinTile(cell_size, boughtSkins[i], 100+(50*(i%10/2)), "img/skins/" + skinNames[i]);
 		else
-			tiles[i] = new SkinTile(cell_size, boughtSkins[i], 100, "img/bird.png");
+			tiles[i] = new SkinTile(cell_size, boughtSkins[i], 100+(50*(i%10/2)), "img/skins/bird.png");
 	}
 	moveTiles();
 }
@@ -63,6 +63,11 @@ void Shop::moveTiles()
 		}
 }
 
+std::string Shop::getSkinPath()
+{
+	return actualSkinName;
+}
+
 void Shop::drawCounters()
 {
 	font.loadFromFile("font/ariblk.ttf");
@@ -91,6 +96,19 @@ void Shop::drawComponents()
 	window->display();
 }
 
+void Shop::buySkin(int number)
+{
+	if (candyAmount >= tiles[number]->getPrice())
+	{
+		candyAmount -= tiles[number]->getPrice();
+		tiles[number]->unlock(true);
+		actualSkinName = "img/skins/" + (skinNames[number] == "" ? "bird.png" : skinNames[number]);
+	}
+
+	boughtSkins[number] = true;
+	candyAmountDisplay.setString(std::to_string(candyAmount));
+}
+
 void Shop::open()
 {
 	bool selected = false;
@@ -111,6 +129,20 @@ void Shop::open()
 				{
 					selected = true;
 				}
+
+				for (int i = 0; i < 20; i++)
+				{
+					if (tiles[i]->getRect().getGlobalBounds().contains(sf::Mouse::getPosition(*window).x, sf::Mouse::getPosition(*window).y))
+					{
+						if (tiles[i]->isUnlocked())
+						{
+							actualSkinName = "img/skins/" + (skinNames[i] == "" ? "bird.png" : skinNames[i]);
+							selected = true;
+						}
+						else
+							buySkin(i);
+					}
+				}
 			}
 
 			else if (eventHandler.type == sf::Event::KeyPressed && eventHandler.key.code == sf::Keyboard::Escape)
@@ -119,6 +151,8 @@ void Shop::open()
 
 		drawComponents();
 	}
+
+	writeDataFile(this);
 }
 
 Shop::~Shop()

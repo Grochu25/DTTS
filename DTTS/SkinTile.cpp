@@ -10,7 +10,7 @@ SkinTile::SkinTile(float cell_size, bool enable, int price, std::string imgPath)
 
 	background.setFillColor(sf::Color(180,180,180));
 	background.setSize(sf::Vector2f(cell_size*3,cell_size*1.2));
-	texture.loadFromFile(imgPath);
+	texture.loadFromImage(Bird::createBirdDown(imgPath));
 	birdSprite.setTexture(texture);
 	birdSprite.setScale(cell_size*1.2/290,cell_size*1.2/290);
 	birdSprite.setOrigin(birdSprite.getGlobalBounds().width/2, birdSprite.getGlobalBounds().height/2);
@@ -22,9 +22,24 @@ SkinTile::SkinTile(float cell_size, bool enable, int price, std::string imgPath)
 	priceString.setScale(cell_size / 40, cell_size / 40);
 }
 
+sf::RectangleShape SkinTile::getRect()
+{
+	return sf::RectangleShape(background);
+}
+
 void SkinTile::unlock(bool state)
 {
 	unlocked = state;
+}
+
+bool SkinTile::isUnlocked()
+{
+	return unlocked;
+}
+
+int SkinTile::getPrice()
+{
+	return price;
 }
 
 void SkinTile::draw(sf::RenderTarget& target, sf::RenderStates states) const

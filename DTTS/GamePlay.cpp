@@ -15,6 +15,10 @@ void writeDataFile(GamePlay* gp)
 
         for (int i = 0; i < 20; i++)
             dataFile.write(reinterpret_cast<char*>(&gp->boughtSkins[i]), sizeof(bool));
+
+        for(int i=0;i< gp->actualSkinName.length();i++)
+            dataFile.write(reinterpret_cast<char*>(&gp->actualSkinName[i]), sizeof(char));
+
         dataFile.close();
     }
     catch (std::exception e)
@@ -27,8 +31,21 @@ GamePlay::GamePlay(sf::RenderWindow &window, float cell_size)
 {
     this->window = &window;
     this->cell_size = cell_size;
-    initialScale();
     readDataFile();
+    initialScale();
+}
+
+std::string convertToString(char* text, int maxLength)
+{
+    std::string result = "";
+    int i = 0;
+    while (text[i] > 32 && text[i] < 123 && i < maxLength)
+    {
+        result += text[i];
+        i++;
+    }
+
+    return result;
 }
 
 void GamePlay::readDataFile()
@@ -44,7 +61,14 @@ void GamePlay::readDataFile()
         for (int i = 0; i < 20; i++)
             dataFile.read(reinterpret_cast<char*>(&boughtSkins[i]), sizeof(bool));
 
+        char* actualSkin = new char[20];
+        dataFile.read(actualSkin, 20);
+
         dataFile.close();
+
+        this->actualSkinName = convertToString(actualSkin, 20);
+
+        delete [] actualSkin;
     }
     catch (std::exception e)
     {
@@ -56,6 +80,7 @@ void GamePlay::initialScale()
 {
     bird.scale(cell_size*1.25 / 290,  cell_size * 1.25 / 290);
     bird.setPosition(this->window->getSize().x / 2 - bird.getGlobalBounds().width/2, cell_size * 6.5);
+    bird.setNewTextures(actualSkinName);
 
     background.setPosition(cell_size / 2, cell_size / 2);
     background.setSize(sf::Vector2f(cell_size * 8, cell_size * 13));
@@ -163,6 +188,8 @@ void GamePlay::moveBird()
 
 void GamePlay::start()
 {
+    if (!window->isOpen())return;
+    
     sf::Thread birdMoveThread(&GamePlay::moveBird, this);
     birdMoveThread.launch();
     bird.toss();

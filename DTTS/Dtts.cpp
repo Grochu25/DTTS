@@ -5,8 +5,7 @@
 
 float cell = 72;
 
-//int WinMain()
-int main()
+int WinMain()
 {
     sf::ContextSettings settings;
     settings.antialiasingLevel = 2000;   //wygladzenie krawedzi 

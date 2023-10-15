@@ -25,6 +25,7 @@ protected:
 	sf::RenderWindow* window = nullptr;
 	sf::RectangleShape background;
 	bool *boughtSkins;
+	std::string actualSkinName = "img/skins/bird.png";
 
 public:
 	GamePlay() {}

@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "Bird.h"
 
 class SkinTile : public sf::Drawable
 {
@@ -19,4 +20,7 @@ public:
 
 	void setPosition(float x, float y);
 	void unlock(bool);
+	bool isUnlocked();
+	int getPrice();
+	sf::RectangleShape getRect();
 };
